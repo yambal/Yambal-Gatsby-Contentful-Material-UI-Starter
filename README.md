@@ -5,5 +5,8 @@
 - [Polished](https://polished.js.org/)
 - [Material-UI](https://material-ui.com/)
 
+
+``` .env
 CONTENTFUL_SPACE_ID=[***]
 CONTENTFUL_ACCESS_TOKEN=[***]
+```
