@@ -42,9 +42,9 @@ const Component: React.FC<Props> = ({ data }) => {
           <Link to="/persons/">Go to authors</Link>
         </li>
         {data.allContentfulBlogPost.edges.map(
-          (post) => {
+          (post, index) => {
             return (
-              <li>
+              <li key={index}>
                 <Link to={`/post/${post.node.slug}`}>{post.node.title}</Link>
               </li>
             )

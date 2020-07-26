@@ -4,36 +4,64 @@ import styled from "styled-components"
 import { invert } from 'polished'
 import SiteMetaDataContext from "./SiteMetaData/SiteMetaDataContext"
 
-// ______________________________________________________
-//
-const HeaderWrapper = styled.div`
-  background: #663399;
-  a {
-    color: ${invert(`#663399`)};
-    text-decoration: "none";
-  };
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import { Container, makeStyles } from "@material-ui/core"
+import DrawerContext from "./Drawer/DrawerContext"
+
+interface iHeader {
+  position: 'static' | 'fixed'
+}
+
+const StyledAppBar = styled(AppBar)`
+  .MuiContainer-root{
+    .MuiToolbar-gutters {
+      padding-left: 0;
+      adding-right: 0;
+    }
+  }
 `
 
-export const Header: React.FC = props => {
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  }
+}))
+
+export const Header: React.FC<iHeader> = props => {
   const data = React.useContext(SiteMetaDataContext)
   const title = data.site?.siteMetadata?.title || '???'
+  const {position} = props
+  const classes = useStyles()
+  const drawerContext = React.useContext(DrawerContext)
+
+  const menuIconClickHandler = React.useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      console.log(44, drawerContext.isOpen, drawerContext.setClose, drawerContext.setOpen)
+      drawerContext.isOpen ? drawerContext.setClose() : drawerContext.setOpen()
+    },
+    [drawerContext.isOpen, drawerContext.setClose, drawerContext.setOpen]
+  )
+
   return(
-  <HeaderWrapper>
-    <div
-      style={{
-        margin: "0 auto",
-        maxWidth: 960,
-        padding: "1.45rem 1.0875rem"
-      }}
-    >
-      <h1 style={{ margin: 0 }}>
-        <Link
-          to="/"
+  <StyledAppBar position={position} className={classes.appBar}>
+    <Container>
+      <Toolbar>
+        <IconButton edge="start" color="inherit" aria-label="menu"
+          onClick={menuIconClickHandler}
         >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6">
           {title}
-        </Link>
-      </h1>
-    </div>
-  </HeaderWrapper>
+        </Typography>
+        <Button color="inherit">Login</Button>
+      </Toolbar>
+    </Container>
+  </StyledAppBar>
   )
 }
