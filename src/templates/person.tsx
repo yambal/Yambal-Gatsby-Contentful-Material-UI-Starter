@@ -1,6 +1,7 @@
 import * as React from "react"
 import { Link } from "gatsby"
 import { PersonsPageContext } from "../../gatsby-node/createPersonsPage"
+import { PageWrapper } from "../layouts/PageWrapper"
 // ______________________________________________________
 //
 type Props = {
@@ -9,8 +10,8 @@ type Props = {
 // ______________________________________________________
 //
 const Component: React.FC<Props> = ({ pageContext }) => (
-  <div>
-    <h1>Author name is {pageContext.person.name}</h1>
+  <PageWrapper>
+    <h1>{pageContext.person.name}</h1>
     <ul>
       <li>
         <Link to="/persons/">Back to authors</Link>
@@ -19,7 +20,7 @@ const Component: React.FC<Props> = ({ pageContext }) => (
         <Link to="/">Back to top</Link>
       </li>
     </ul>
-  </div>
+  </PageWrapper>
 )
 // ______________________________________________________
 //

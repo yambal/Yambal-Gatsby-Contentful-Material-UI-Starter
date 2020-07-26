@@ -8,7 +8,8 @@ export const SiteMetaDataProvider: React.FC = (props) => {
     site {
       siteMetadata {
         title,
-        subtitle
+        subtitle,
+        copyright
       }
     }
   }`)

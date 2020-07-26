@@ -5,7 +5,8 @@ const defaultContext:SiteMetaDataProviderQuery = {
   site: {
     siteMetadata: {
       title: 'this is default...',
-      subtitle: 'this is default...'
+      subtitle: 'this is default...',
+      copyright: 'this is default...'
     }
   }
 }

@@ -3,64 +3,65 @@ import styled from "styled-components"
 import { Header } from "../components/header"
 import { SiteMetaDataProvider } from "../components/SiteMetaData/SiteMetaDataProvider"
 import { HeaderHelmet, iHeaderHelmet } from "./HeaderHelmet"
-import { createMuiTheme, makeStyles, ThemeProvider, useTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/core/styles'
 import { muiTheme } from '../theming/muiTheme'
-import { CssBaseline, Container, Drawer, List, ListItem, ListItemText, Toolbar, SwipeableDrawer, Hidden } from "@material-ui/core"
-import { ContentfulBlogPostSysFilterInput } from "../../types/graphql-types"
-import { DrawerProvider } from "../components/Drawer/DrawerProvider"
-import DrawerContext from "../components/Drawer/DrawerContext"
+import { CssBaseline, Container, List, ListItem, ListItemText, Toolbar, SwipeableDrawer, Hidden, Divider } from "@material-ui/core"
+import { Footer } from "../components/Footer"
 
 interface iComponent extends iHeaderHelmet {
+  appBarPosition?: 'static' | 'fixed'
 }
+
+const MobileDrawer = styled(SwipeableDrawer)`
+  .MuiPaper-root {
+    width: 240px;
+  }
+`
+const Main = styled.main``
+const SideBar = styled.nav``
 
 const BoddyLayout = styled(Container)`
   display: flex;
-  .MuiDrawer-root {
-    margin-right: 20px;
-    .MuiPaper-root {
-      position: relative;
-    }
+  ${Main} {
+    flex-shrink: 1;
+    flex-grow: 1;
+  }
+
+  ${SideBar} {
+    flex-shrink: 0;
+    flex-grow: 0;
+    width: 240px;
   }
 `
 
-const useStyles = makeStyles((theme) => ({
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: '240px',
-      flexShrink: 0,
-    },
-  },
-  drawerPaper: {
-    width: '240px',
-  }
-}));
-
 export const PageWrapper: React.FC<iComponent> = props => {
-  const { pageTitle, description, children } = props
-  const classes = useStyles();
-  const drawerContext = React.useContext(DrawerContext)
-  console.log(42, drawerContext.isOpen, drawerContext.setClose, drawerContext.setOpen)
+  const { pageTitle, description, children, appBarPosition = 'fixed' } = props
+
+  const [drawerIsOpen, setDrawerIsOpen] = React.useState(false)
+  const drawerToggleHandler = React.useCallback(
+    () => {
+      drawerIsOpen ? setDrawerIsOpen(false) : setDrawerIsOpen(true)
+    },
+    [drawerIsOpen]
+  )
 
   const onDrawerOpen = React.useCallback(
     (event: React.SyntheticEvent) => {
-      console.log(45)
-      drawerContext.setOpen()
+      setDrawerIsOpen(true)
     },
-    [drawerContext.isOpen, drawerContext.setClose, drawerContext.setOpen]
+    []
   )
 
   const onDrawerClose = React.useCallback(
     (event: React.SyntheticEvent) => {
-      console.log(52, drawerContext.setClose)
-      drawerContext.setClose()
+      setDrawerIsOpen(false)
     },
-    [drawerContext.isOpen, drawerContext.setClose, drawerContext.setOpen]
+    []
   )
 
   const InnerDrawer = () => {
     return (
       <React.Fragment>
-        <Toolbar />
         <List>
           <ListItem>
             <ListItemText primary='Hello' />
@@ -73,35 +74,39 @@ export const PageWrapper: React.FC<iComponent> = props => {
   return (
     <SiteMetaDataProvider>
       <ThemeProvider theme={muiTheme}>
-        <CssBaseline />
-        
-          <HeaderHelmet
-            pageTitle={pageTitle}
-            description={description}
-          />
-          <Header position="fixed" />
-          <SwipeableDrawer
-              anchor='left'
-              open={drawerContext.isOpen}
-              onClose={onDrawerClose}
-              onOpen={onDrawerOpen}
-            >
+      <CssBaseline />
+        <HeaderHelmet
+          pageTitle={pageTitle}
+          description={description}
+        />
+        <Header
+          position={appBarPosition}
+          menuIconHandler={drawerToggleHandler}
+        />
+        <MobileDrawer
+          anchor='left'
+          open={drawerIsOpen}
+          onClose={onDrawerClose}
+          onOpen={onDrawerOpen}
+        >
+          <Toolbar />
+          <Divider />
+          {InnerDrawer()}
+        </MobileDrawer>
+        <BoddyLayout>
+          <Main>
+            <Toolbar/>
+            {children}
+          </Main>
+          <Hidden smDown={true}>
+            {/* side-menu */}
+            <SideBar>
+              <Toolbar />
               {InnerDrawer()}
-            </SwipeableDrawer>
-          <BoddyLayout>
-            <Hidden smDown={true}>
-              {/* side-menu */}
-              <div>
-                {InnerDrawer()}
-              </div>
-            </Hidden>
-            <main>
-              <React.Fragment>
-                <Toolbar/>
-                {children}
-              </React.Fragment>
-            </main>
-          </BoddyLayout>
+            </SideBar>
+          </Hidden>
+        </BoddyLayout>
+        <Footer />
       </ThemeProvider>
     </SiteMetaDataProvider>
   )

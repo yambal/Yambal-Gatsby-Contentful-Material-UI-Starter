@@ -10,6 +10,7 @@ module.exports = {
   siteMetadata: {
     title: `Gatsby Typescript Starter`,
     subtitle: `Sub Title`,
+    copyright: `Copyright © 2020 WWW.YAMBAL.NET`,
     authors: [
       { name: 'Tori', slug: 'tori' },
       { name: 'Neko', slug: 'neko' },
