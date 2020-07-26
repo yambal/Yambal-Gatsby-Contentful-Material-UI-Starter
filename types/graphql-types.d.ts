@@ -3289,6 +3289,7 @@ export type SiteFieldsEnum =
   'internal___owner' |
   'internal___type' |
   'siteMetadata___title' |
+  'siteMetadata___subtitle' |
   'siteMetadata___authors' |
   'siteMetadata___authors___name' |
   'siteMetadata___authors___slug' |
@@ -3876,6 +3877,7 @@ export type SitePluginSortInput = {
 
 export type SiteSiteMetadata = {
   title?: Maybe<Scalars['String']>,
+  subtitle?: Maybe<Scalars['String']>,
   authors?: Maybe<Array<Maybe<SiteSiteMetadataAuthors>>>,
 };
 
@@ -3895,6 +3897,7 @@ export type SiteSiteMetadataAuthorsFilterListInput = {
 
 export type SiteSiteMetadataFilterInput = {
   title?: Maybe<StringQueryOperatorInput>,
+  subtitle?: Maybe<StringQueryOperatorInput>,
   authors?: Maybe<SiteSiteMetadataAuthorsFilterListInput>,
 };
 
@@ -3916,10 +3919,15 @@ export type StringQueryOperatorInput = {
   glob?: Maybe<Scalars['String']>,
 };
 
+export type SiteMetaDataProviderQueryVariables = {};
+
+
+export type SiteMetaDataProviderQuery = { site: Maybe<{ siteMetadata: Maybe<Pick<SiteSiteMetadata, 'title' | 'subtitle'>> }> };
+
 export type IndexHomeQueryVariables = {};
 
 
-export type IndexHomeQuery = { site: Maybe<{ siteMetadata: Maybe<Pick<SiteSiteMetadata, 'title'>> }>, allContentfulBlogPost: { edges: Array<{ node: Pick<ContentfulBlogPost, 'id' | 'title' | 'slug'> }> } };
+export type IndexHomeQuery = { allContentfulBlogPost: { edges: Array<{ node: Pick<ContentfulBlogPost, 'id' | 'title' | 'slug'> }> } };
 
 export type PersonsQueryVariables = {};
 

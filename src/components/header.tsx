@@ -1,7 +1,9 @@
 import * as React from "react"
-import { Link, StaticQuery } from "gatsby"
+import { Link, StaticQuery, graphql } from "gatsby"
 import styled from "styled-components"
 import { invert } from 'polished'
+import SiteMetaDataContext from "./SiteMetaData/SiteMetaDataContext"
+
 // ______________________________________________________
 //
 const HeaderWrapper = styled.div`
@@ -11,13 +13,11 @@ const HeaderWrapper = styled.div`
     text-decoration: "none";
   };
 `
-interface iComponent {
-  siteMetadata: {
-    title: string
-  }
-}
 
-const Component: React.FC<iComponent> = props => (
+export const Header: React.FC = props => {
+  const data = React.useContext(SiteMetaDataContext)
+  const title = data.site?.siteMetadata?.title || '???'
+  return(
   <HeaderWrapper>
     <div
       style={{
@@ -30,30 +30,10 @@ const Component: React.FC<iComponent> = props => (
         <Link
           to="/"
         >
-          {props.siteMetadata.title}
+          {title}
         </Link>
       </h1>
     </div>
   </HeaderWrapper>
-)
-
-export const pageQuery = graphql`
-  query HeaderSuteTitle {
-    site {
-      siteMetadata {
-        title
-      }
-    }
-  }
-`
-
-export const Header: React.FC = () => (
-  <StaticQuery
-    query={pageQuery}
-    render={
-      (data) => <Component
-        siteMetadata={data.site.siteMetadata}
-      />
-    }
-  />
-)
+  )
+}

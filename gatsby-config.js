@@ -9,6 +9,7 @@ console.log(process.env.CONTENTFUL_SPACE_ID, process.env.CONTENTFUL_ACCESS_TOKEN
 module.exports = {
   siteMetadata: {
     title: `Gatsby Typescript Starter`,
+    subtitle: `Sub Title`,
     authors: [
       { name: 'Tori', slug: 'tori' },
       { name: 'Neko', slug: 'neko' },
@@ -18,7 +19,13 @@ module.exports = {
   plugins: [
     `gatsby-transformer-remark`,
     `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-typescript`,
+    {
+      resolve: `gatsby-plugin-typescript`,
+      compilerOptions: {
+        target: `es2015`,
+        jsx: `react`
+      }
+    },
     {
       resolve: 'gatsby-plugin-graphql-codegen',
       options: {

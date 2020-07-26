@@ -10,7 +10,7 @@ type Props = {
 // ______________________________________________________
 //
 const Component: React.FC<Props> = ({ pageContext }) => (
-  <PageWrapper description={pageContext.title}>
+  <PageWrapper pageTitle={pageContext.title} description={pageContext.title}>
     <h1>{pageContext.title}</h1>
     <div dangerouslySetInnerHTML={{ __html: pageContext.body.childMarkdownRemark.html }} />
     <ul>

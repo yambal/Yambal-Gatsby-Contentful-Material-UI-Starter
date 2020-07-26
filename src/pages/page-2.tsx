@@ -4,7 +4,7 @@ import { PageWrapper } from "../layouts/PageWrapper"
 // ______________________________________________________
 //
 const Component: React.FC = () => (
-  <PageWrapper description="second page">
+  <PageWrapper pageTitle="second page" description="second page dsc">
     <h1>Hi from the second page</h1>
     <p>Welcome to page 2</p>
     <ul>
