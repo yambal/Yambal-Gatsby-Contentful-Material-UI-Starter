@@ -5,7 +5,7 @@
 - [Polished](https://polished.js.org/)
 - [Material-UI](https://material-ui.com/)
 
-
+## Contentful を使用する前提で、.env が必要
 ``` .env
 CONTENTFUL_SPACE_ID=[***]
 CONTENTFUL_ACCESS_TOKEN=[***]
