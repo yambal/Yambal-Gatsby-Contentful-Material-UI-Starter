@@ -10,17 +10,27 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Container, makeStyles, Hidden } from "@material-ui/core" 
+import { AlgoliaSearch } from "./search/AlgoliaSearch";
 
 interface iHeader {
   position: 'static' | 'fixed'
   menuIconHandler: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
+const Spacer = styled.div``
+
+const HeaderContainer = styled(Container)``
+const HeaderToolbar = styled(Toolbar)``
+
 const StyledAppBar = styled(AppBar)`
-  .MuiContainer-root{
-    .MuiToolbar-gutters {
-      padding-left: 0;
-      adding-right: 0;
+  ${HeaderContainer} {
+    padding-left: 0;
+    padding-right: 0;
+    ${HeaderToolbar} {
+      ${Spacer} {
+        flex-grow: 1;
+        flex-shrink: 1;
+      }
     }
   }
 `
@@ -32,8 +42,8 @@ export const Header: React.FC<iHeader> = props => {
 
   return(
   <StyledAppBar position={position}>
-    <Container>
-      <Toolbar>
+    <HeaderContainer>
+      <HeaderToolbar>
         <Hidden mdUp>
           <IconButton edge="start" color="inherit" aria-label="menu"
             onClick={props.menuIconHandler}
@@ -44,9 +54,10 @@ export const Header: React.FC<iHeader> = props => {
         <Typography variant="h6">
           {title}
         </Typography>
-        <Button color="inherit">Login</Button>
-      </Toolbar>
-    </Container>
+        <Spacer />
+        <AlgoliaSearch />
+      </HeaderToolbar>
+    </HeaderContainer>
   </StyledAppBar>
   )
 }
