@@ -7,6 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import { muiTheme } from '../theming/muiTheme'
 import { CssBaseline, Container, List, ListItem, ListItemText, Toolbar, SwipeableDrawer, Hidden, Divider } from "@material-ui/core"
 import { Footer } from "../components/Footer"
+import { navigate } from "gatsby"
 
 interface iComponent extends iHeaderHelmet {
   appBarPosition?: 'static' | 'fixed'
@@ -59,12 +60,23 @@ export const PageWrapper: React.FC<iComponent> = props => {
     []
   )
 
+  const ClickReactLinesEllipsisSample = React.useCallback(
+    () => {
+      navigate("/lines_ellipsis_sample/")
+    },
+    []
+  )
+
+
   const InnerDrawer = () => {
     return (
       <React.Fragment>
         <List>
           <ListItem>
             <ListItemText primary='Hello' />
+          </ListItem>
+          <ListItem button onClick={ClickReactLinesEllipsisSample}>
+            <ListItemText primary='react-lines-ellipsis : Sample' />
           </ListItem>
         </List>
       </React.Fragment>

@@ -36,6 +36,8 @@
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
     "react-instantsearch-dom": "^6.7.0",
+    "react-joyride": "^2.2.1",
+    "react-lines-ellipsis": "^0.14.1",
     "styled-components": "^5.1.1",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7",
